@@ -4,12 +4,27 @@ Select **Runtime → Change runtime type → T4 GPU**. This release is an
 `sm_75` binary; other Colab GPUs are not supported by this file.
 
 Cell 1 checks the actual compiler and GPU. The driver version shown by
-`nvidia-smi` is not the NVCC version.
+`nvidia-smi` is not the NVCC version. It prints both results explicitly
+and tells you whether Cell 2 is needed.
 
 ```python
 import subprocess
-subprocess.run(["nvidia-smi"], check=True)
-subprocess.run(["nvcc", "--version"], check=True)
+
+gpu = subprocess.check_output(
+    ["nvidia-smi", "--query-gpu=name,compute_cap,driver_version",
+     "--format=csv,noheader"], text=True,
+).strip()
+compiler = subprocess.check_output(["nvcc", "--version"], text=True).strip()
+
+print("GPU / compute capability / driver:", gpu)
+print("\nNVCC compiler:\n", compiler)
+
+if not gpu.startswith("Tesla T4, 7.5"):
+    raise RuntimeError("This binary requires a Tesla T4 (sm_75)")
+if "release 13." in compiler:
+    print("\nCUDA 13 detected: skip Cell 2 and run Cell 3.")
+else:
+    print("\nCUDA 13 is needed: run Cell 2, then Cell 3.")
 ```
 
 cuRANDDx 0.2.4 requires NVCC 13.0 or newer. If Cell 1 shows CUDA 12.x,
