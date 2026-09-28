@@ -44,20 +44,35 @@ if [[ -z $nvcc13 ]]; then
 
     signed=/etc/apt/sources.list.d/cuda-ubuntu2404-x86_64.list
     unsigned=/etc/apt/sources.list.d/cuda.list
-    expected_signed='deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/ /'
-    expected_unsigned='deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64 /'
+    cuda_repo=https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64
+    echo 'CUDA APT source files before installation:'
+    for source_file in "$signed" "$unsigned"; do
+        if [[ -f $source_file ]]; then
+            printf '%s:\n' "$source_file"
+            sed -n 'l' "$source_file"
+        fi
+    done
     if [[ -f $unsigned ]]; then
-        [[ -f $signed && $(<"$signed") == "$expected_signed" && $(<"$unsigned") == "$expected_unsigned" ]] || {
-            echo 'Unexpected CUDA APT sources; inspect them before changing anything.' >&2
+        mapfile -t active_lines < <(
+            sed -e '/^[[:space:]]*#/d' -e '/^[[:space:]]*$/d' "$unsigned"
+        )
+        [[ ${#active_lines[@]} -eq 1 && ${active_lines[0]} =~ ^[[:space:]]*deb[[:space:]] && ${active_lines[0]} == *"$cuda_repo"* ]] || {
+            echo 'cuda.list contains unexpected entries; no APT source was changed.' >&2
             exit 1
         }
-        mv -- "$unsigned" "$unsigned.disabled"
     fi
     if [[ ! -f $signed ]]; then
         curl -fL \
             https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
             -o /tmp/sofl-cuda-keyring.deb
         dpkg -i /tmp/sofl-cuda-keyring.deb
+    elif ! grep -Fq "$cuda_repo" "$signed" || ! grep -Fq 'signed-by=' "$signed"; then
+        echo 'The NVIDIA signed source is unexpected; inspect it before continuing.' >&2
+        exit 1
+    fi
+    if [[ -f $unsigned ]]; then
+        echo 'Disabling the duplicate cuda.list entry for the same NVIDIA repository.'
+        mv -- "$unsigned" "$unsigned.disabled"
     fi
     apt-get update -qq
     DEBIAN_FRONTEND=noninteractive apt-get install -y cuda-toolkit-13-0
