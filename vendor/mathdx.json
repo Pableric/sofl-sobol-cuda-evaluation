@@ -1,0 +1,8 @@
+{
+  "archive": "nvidia-mathdx-26.06.1-cuda13.tar.gz",
+  "archive_sha256": "59a9233db34b75568acbcc5284e6cefe6fad5577ee644f85044971d62eeea353",
+  "archive_url": "https://developer.nvidia.com/downloads/compute/cuRANDDx/redist/cuRANDDx/cuda13/nvidia-mathdx-26.06.1-cuda13.tar.gz",
+  "curanddx_version": "0.2.4",
+  "mathdx_version": "26.06.1",
+  "redistributed": false
+}

@@ -1,0 +1,57 @@
+{
+  "architecture": "sm_75",
+  "debug_sections": [],
+  "embedded_ptx_entries": 0,
+  "errors": [],
+  "exported_symbols": [
+    "SOFL_SOBOL_1.0",
+    "sofl_sobol_fused_checksum_u32@@SOFL_SOBOL_1.0",
+    "sofl_sobol_generate_f32@@SOFL_SOBOL_1.0",
+    "sofl_sobol_generate_u32@@SOFL_SOBOL_1.0"
+  ],
+  "forbidden_string_hits": [],
+  "format": "sofl-sobol-closed-binary-audit-v1",
+  "library_bytes": 72008,
+  "library_sha256": "fc01e128ee013875e11bc5d52c5d9b163ff51b2e73075045106a7c0b485d8f60",
+  "ptxas_spill_records": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "qualified": true,
+  "sass_disassembly_sha256": "76438c8945c9504f85841036f1904c95edec1291a586bf860ffd5b6a153daacc",
+  "sass_functions": 9
+}

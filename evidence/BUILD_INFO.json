@@ -1,0 +1,25 @@
+{
+  "architecture": "sm_75",
+  "binary_form": "SASS-only shared library; no embedded PTX",
+  "dimensions": "one-based contiguous selection within D1-D64",
+  "direction_table_sha256": "e7859e3870546b11d8387d204847023bd369691e746411bf304c8dd58411698d",
+  "format": "sofl-sobol-closed-binary-release-v1",
+  "gpu": "Tesla T4, 7.5, 580.82.07",
+  "header_sha256": "38eb475d1fd8b7eef97fdb67a34e1db8fe010f598057fd8f535405a0727d70e9",
+  "layout": "dimension-major; point zero included",
+  "library_sha256": "fc01e128ee013875e11bc5d52c5d9b163ff51b2e73075045106a7c0b485d8f60",
+  "nvcc_version": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0",
+  "point_counts": [
+    8192,
+    65536,
+    60000000
+  ],
+  "public_symbols": [
+    "SOFL_SOBOL_1.0",
+    "sofl_sobol_fused_checksum_u32@@SOFL_SOBOL_1.0",
+    "sofl_sobol_generate_f32@@SOFL_SOBOL_1.0",
+    "sofl_sobol_generate_u32@@SOFL_SOBOL_1.0"
+  ],
+  "release": "sofl-sobol-sm75-v1",
+  "validation": "exact frozen FNV-1a hashes, guards, deterministic reruns"
+}
